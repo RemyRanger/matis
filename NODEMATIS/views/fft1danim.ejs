@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta content="IE=edge" http-equiv="X-UA-Compatible">
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+	<meta content="" name="description">
+	<meta content="" name="author">
+	<title>MATIS</title><!-- Bootstrap Core CSS -->
+  <link rel="icon" href="css/LOGO.png">
+	<link href="css/bootstrap.min.css" rel="stylesheet"><!-- Custom CSS -->
+	<link href="css/sb-admin.css" rel="stylesheet"><!-- Morris Charts CSS -->
+	<link href="css/plugins/morris.css" rel="stylesheet"><!-- Custom Fonts -->
+	<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <script src="plotly.min.js"></script>
+</head>
+<body>
+	<div id="wrapper">
+		<!-- Navigation -->
+		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				 <img class="logo" src="css/LOGO.png">
+         <a class="navbar-brand" href="\home">MATIS Project</a>
+         <i>Fast Fourier Transform 1D</i>
+			</div><!-- Top Menu Items -->
+			<ul class="nav navbar-right top-nav">
+				<li class="active">
+					<a href="/dataupload"><i aria-hidden="true" class="fa fa-download"></i> Load Data</a>
+				</li><!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+				<li style="list-style: none; display: inline">
+					<div class="collapse navbar-collapse navbar-ex1-collapse">
+						<ul class="nav navbar-nav side-nav">
+							<li>
+								<a href="/home"><i aria-hidden="true" class="fa fa-bullseye"></i> Home</a>
+							</li>
+							<li class="active">
+								<a href="/fft1d"><i aria-hidden="true" class="fa fa-area-chart"></i> FFT 1D</a>
+							</li>
+							<li>
+								<a data-target="#demo" data-toggle="collapse" href="javascript:;"><i aria-hidden="true" class="fa fa-signal"></i> FFT 2D <i class="fa fa-fw fa-caret-down"></i></a>
+								<ul class="collapse" id="demo">
+									<li>
+										<a href="/fft2dvisu2d">Visual 2D</a>
+									</li>
+									<li>
+										<a href="/fft2dvisu3d">Visual 3D</a>
+									</li>
+								</ul>
+							</li>
+							<li>
+								<a href="#"><i aria-hidden="true" class="fa fa-area-chart"></i> Music</a>
+							</li>
+							<li>
+								<a href="#"><i aria-hidden="true" class="fa fa-area-chart"></i> Esprit</a>
+							</li>
+							<li>
+								<a href="#"><i class="fa fa-fw fa-wrench"></i>Tutorial</a>
+							</li>
+							<li>
+								<a href="#"><i aria-hidden="true" class="fa fa-user-circle-o"></i>Contact</a>
+							</li>
+						</ul>
+					</div><!-- /.navbar-collapse -->
+				</li>
+			</ul>
+		</nav>
+    <div class="row">
+                <div class="col-lg-8">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"></i> Selected Signal: Degree = <%= degree %>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div id="myDiv4">
+                              <script>
+                              Plotly.d3.csv('upload/absdonnees.csv', function(err, rows){
+                              function unpack(rows, key) {
+                                return rows.map(function(row) { return row[key]; });
+                              }
+
+
+                              var x_data = [];
+                              var y_data = [];
+                              for(i=1;i<512;i++) {
+                                var degHead = 'deg-'+i;
+                                var z = unpack(rows,degHead);
+                                y_data.push(unpack(rows,degHead));
+                              }
+                              console.log(y_data);
+                              var fmin = 0;
+                              var fmax = 18;
+                              var step = (fmax - fmin)/256;
+
+                              for (var j=0; j<257; j++) {
+                                f = fmin + j*step;
+                                x_data.push( f );
+                              }
+
+                              var data = [{
+                                line: {                             // set the width of the line.
+                                    width: 1
+                                  },
+                                x: x_data,
+                                y: y_data[<%= degree %>]
+                              }];
+
+                                      var layout = {
+                                        yaxis: {title: "Amplitude du signal SER"},
+                                        xaxis: {title: "Fréquence (e9.Hz)"},
+                                        autosize: true,
+                                        width: 750,
+                                        height: 200,
+                                        margin: {
+                                          l: 40,
+                                          r: 20,
+                                          b: 40,
+                                          t: 20,
+                                        }
+                                      };
+                              Plotly.newPlot('myDiv4', data, layout);
+                              });
+                              </script>
+                            </div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"></i> FFT 1D
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                          <div id="myDiv3">
+                            <script src="graph3.js"></script>
+                          </div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"></i> Data Selection
+                        </div>
+                        <div id="container" class="panel-body">
+                          <script src="./js/three.min.js"></script>
+                          <script type="text/javascript">
+                            var scene = new THREE.Scene();
+                            var camera = new THREE.PerspectiveCamera(50, 320 / 300, 0.1, 1000);
+
+                            var renderer = new THREE.WebGLRenderer();
+                            renderer.setSize(320, 300);
+                            document.getElementById('container').appendChild(renderer.domElement);
+
+                            //Add SPHERE
+                            var geometry = new THREE.SphereGeometry(5, 30, 30, 0, Math.PI * 2, 0, Math.PI);
+                            var material = new THREE.MeshBasicMaterial( { color: 0x33FFFF, wireframe: true } );
+                            var sphere = new THREE.Mesh(geometry, material);
+                            scene.add(sphere);
+                            //Add LINE
+                            var material2 = new THREE.LineBasicMaterial({
+          	                   color: 0x999999,
+                               linewidth: 1
+                            });
+
+                            var pas = Math.PI / 256;
+                            for (var theta=0; theta<512 ; theta ++) {
+                              var geometry2 = new THREE.Geometry();
+
+                              geometry2.vertices.push(
+          	                    new THREE.Vector3( Math.cos(theta*pas) * 1, 0.1,  Math.sin(theta*pas) * 1),
+          	                    new THREE.Vector3( Math.cos(theta*pas) * 6, 0.1, Math.sin(theta*pas) * 6)
+                              );
+                              var line = new THREE.Line( geometry2, material2 );
+                              scene.add( line );
+                              line.rotation.x = 0.19;
+                            }
+
+                            //Add RED LINE
+                            var deg = <%= degree %>;
+                            var material3 = new THREE.LineBasicMaterial({
+          	                   color: 0xf60b0b,
+                               linewidth: 3
+                            });
+                            var geometry3 = new THREE.Geometry();
+                            geometry3.vertices.push(
+                              new THREE.Vector3( Math.cos(deg*pas) * 1, 0.1,  Math.sin(deg*pas) * 1),
+                              new THREE.Vector3( Math.cos(deg*pas) * 6, 0.1, Math.sin(deg*pas) * 6)
+                            );
+                            var redline = new THREE.Line( geometry3, material3 );
+                            scene.add( redline );
+                            redline.rotation.x = 0.19;
+
+														//Add ZERO (Blue) LINE
+                            var deg = 0;
+                            var material5 = new THREE.LineBasicMaterial({
+          	                   color: 0x5245ce,
+                               linewidth: 3
+                            });
+                            var geometry5 = new THREE.Geometry();
+                            geometry5.vertices.push(
+                              new THREE.Vector3( Math.cos(deg*pas) * 1, 0.1,  Math.sin(deg*pas) * 1),
+                              new THREE.Vector3( Math.cos(deg*pas) * 6, 0.1, Math.sin(deg*pas) * 6)
+                            );
+                            var blueline = new THREE.Line( geometry5, material5 );
+                            scene.add( blueline );
+                            blueline.rotation.x = 0.19;
+
+                            //Add ORANGE LINE
+                            var lastdeg = <%= lastdegree %>;
+                            var material4 = new THREE.LineBasicMaterial({
+          	                   color: 0x000000,
+                               linewidth: 3
+                            });
+                            var geometry4 = new THREE.Geometry();
+                            geometry4.vertices.push(
+                              new THREE.Vector3( Math.cos(lastdeg*pas) * 1, 0.1,  Math.sin(lastdeg*pas) * 1),
+                              new THREE.Vector3( Math.cos(lastdeg*pas) * 6, 0.1, Math.sin(lastdeg*pas) * 6)
+                            );
+                            var orangeline = new THREE.Line( geometry4, material4 );
+                            scene.add( orangeline );
+                            orangeline.rotation.x = 0.19;
+
+                            //Add CIRCLE
+                            var geometry = new THREE.RingGeometry( 2, 5, 32 );
+                            var material = new THREE.MeshBasicMaterial( { color: 0x43FFFF, side: THREE.DoubleSide } );
+                            var mesh = new THREE.Mesh( geometry, material );
+                            scene.add( mesh );
+
+                            mesh.rotation.x = 1.77;
+                            sphere.rotation.x = 0.20;
+                            camera.position.z = 15;
+                            var render = function () {
+                              requestAnimationFrame(render);
+															scene.rotation.y += 0.01;
+                              renderer.render(scene, camera);
+                            };
+
+                            render();
+                          </script>
+													<p><FONT COLOR="blue" >--> Zero Segment</FONT></p>
+													<p><FONT COLOR="black" >--> Last Selected Segment: <%= lastdegree %></FONT></p>
+													<p><FONT COLOR="red" >--> Selected Segment: <%= degree %></FONT></p>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <i class="fa fa-bar-chart-o fa-fw"></i> Selection Panel
+                            </div>
+                            <div class="panel-body">
+                              <form action="/post" method="post">
+                                Segment (from 0 to 511):  <input type="value" name="degree" style="color: red;" value="<%= degree %>"/>
+                                <input type="hidden" name="lastdegree" value="<%= degree %>"/>
+                                     <input type="submit" name="submit" value="Select"/>
+                               </form>
+                               <form action="/fft" method="post">
+                                 <input type="hidden" name="lastdegree" value="<%= degree %>"/>
+                                 <input type="hidden" name="degree" value="<%= degree %>"/>
+                                 <input type="submit" name="submit" value="Compute FFT 1D"/>
+                               </form>
+                            </div>
+                            <!-- /.panel-body -->
+                        </div>
+              </div>
+    </div>
+
+		<script src="js/jquery.js">
+		</script> <!-- Bootstrap Core JavaScript -->
+
+		<script src="js/bootstrap.min.js">
+		</script> <!-- Morris Charts JavaScript -->
+
+		<script src="js/plugins/morris/raphael.min.js">
+		</script>
+		<script src="js/plugins/morris/morris.min.js">
+		</script>
+		<script src="js/plugins/morris/morris-data.js">
+		</script>
+	</div>
+</body>
+</html>

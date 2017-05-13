@@ -1,0 +1,117 @@
+body {
+    color: #fff;
+    background-image: url("joueur.jpg");
+    text-align: center;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    line-height: 1.42857;
+}
+
+.inner {
+    padding: 30px;
+    color: #000;
+}
+
+*::after, *::before {
+    box-sizing: border-box;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+canvas {
+	border: 4px solid #A0A0A0;
+   background: black;
+   display: block;
+}
+
+.graph {
+  width: 720px;
+  height: 325px;
+  margin-top: 300px;
+  margin-left: 10px;
+}
+
+
+.btn-group-vertical > .btn-group::after, .btn-group-vertical > .btn-group::before, .btn-toolbar::after, .btn-toolbar::before, .clearfix::after, .clearfix::before, .container-fluid::after, .container-fluid::before, .container::after, .container::before, .dl-horizontal dd::after, .dl-horizontal dd::before, .form-horizontal .form-group::after, .form-horizontal .form-group::before, .modal-footer::after, .modal-footer::before, .modal-header::after, .modal-header::before, .nav::after, .nav::before, .navbar-collapse::after, .navbar-collapse::before, .navbar-header::after, .navbar-header::before, .navbar::after, .navbar::before, .pager::after, .pager::before, .panel-body::after, .panel-body::before, .row::after, .row::before {
+    content: " ";
+    display: table;
+}
+
+.btn-group-vertical > .btn-group::after, .btn-toolbar::after, .clearfix::after, .container-fluid::after, .container::after, .dl-horizontal dd::after, .form-horizontal .form-group::after, .modal-footer::after, .modal-header::after, .nav::after, .navbar-collapse::after, .navbar-header::after, .navbar::after, .pager::after, .panel-body::after, .row::after {
+    clear: both;
+}
+.btn-group-vertical > .btn-group::after, .btn-group-vertical > .btn-group::before, .btn-toolbar::after, .btn-toolbar::before, .clearfix::after, .clearfix::before, .container-fluid::after, .container-fluid::before, .container::after, .container::before, .dl-horizontal dd::after, .dl-horizontal dd::before, .form-horizontal .form-group::after, .form-horizontal .form-group::before, .modal-footer::after, .modal-footer::before, .modal-header::after, .modal-header::before, .nav::after, .nav::before, .navbar-collapse::after, .navbar-collapse::before, .navbar-header::after, .navbar-header::before, .navbar::after, .navbar::before, .pager::after, .pager::before, .panel-body::after, .panel-body::before, .row::after, .row::before {
+    content: " ";
+    display: table;
+}
+
+.masthead, .mastfoot, .cover-container {
+    width: 700px;
+}
+.masthead, .mastfoot, .cover-container {
+    width: 100%;
+}
+.masthead {
+    position: fixed;
+    top: 0;
+}
+
+.navbar-fixed-top {
+    border: 0 none;
+}
+.navbar-inverse {
+    background-color: #222;
+    border-color: #080808;
+}
+.navbar-fixed-top {
+    border-width: 0 0 1px;
+    top: 0;
+}
+.navbar-fixed-bottom, .navbar-fixed-top {
+    border-radius: 0;
+}
+.navbar-fixed-bottom, .navbar-fixed-top {
+    left: 0;
+    position: fixed;
+    right: 0;
+    z-index: 1030;
+}
+.navbar {
+    border-radius: 4px;
+}
+.navbar {
+    border: 1px solid transparent;
+    margin-bottom: 20px;
+    min-height: 50px;
+    position: relative;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+    display: block;
+}
+
+.container-fluid {
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.inner_block {
+    border-color: black;
+    border-style: outset;
+    border-width: 3px;
+    box-shadow: 0 0 100px rgba(0, 0, 0, 1) inset;
+    color: #fff;
+    margin: 0 auto;
+    text-align: center;
+    width: 80%;
+    z-index: 1;
+}
+
+.mastfoot {
+    bottom: 0;
+    position: fixed;
+}
